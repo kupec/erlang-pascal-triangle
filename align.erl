@@ -32,7 +32,7 @@ mixLists(First, Second) -> mixLists([], First, Second).
 mixLists(Result, First, []) -> Result ++ First;
 mixLists(Result, [], Second) -> Result ++ Second;
 mixLists(Result, [F|FRest], [S|SRest]) ->
-    NextResult = [F, S] ++ Result,
+    NextResult = Result ++ [F, S],
     mixLists(NextResult, FRest, SRest).
 
 % export
