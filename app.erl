@@ -19,13 +19,13 @@ charLengthTriangleLine(N) ->
     length(String).
 
 formPascalTriangle(W, N) ->
-    Triangle = formPascalTriangle([], W, N),
+    Triangle = formPascalTriangle([], W, N, collapse),
     lists:concat(Triangle).
 
-formPascalTriangle(Result, _, -1) -> Result;
-formPascalTriangle(Result, W, N) ->
+formPascalTriangle(Result, _, -1, _) -> Result;
+formPascalTriangle(Result, W, N, JustifyOption) ->
     PascalLine = pascal:triangleLine(N),
-    Line = align:justify(W, PascalLine),
+    Line = align:justify(W, PascalLine, JustifyOption),
     NextResult = [Line, "\n"] ++ Result,
-    formPascalTriangle(NextResult, W, N - 1).
+    formPascalTriangle(NextResult, W, N - 1, simple).
 
