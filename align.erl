@@ -1,7 +1,7 @@
 -module(align).
 -export([
     buildLine/2,
-    justify/2
+    justify/3
 ]).
 
 % export
@@ -36,16 +36,23 @@ mixLists(Result, [F|FRest], [S|SRest]) ->
     mixLists(NextResult, FRest, SRest).
 
 % export
-justify(Length, Strings) ->
+justify(Length, Strings, simple) ->
     SpaceCount = getSpaceCount(Length, Strings),
     NumWholes = length(Strings) + 1,
     Wholes = splitNumToList(SpaceCount, NumWholes),
-    buildLine(Strings, Wholes).
+    buildLine(Strings, Wholes);
+justify(Length, Strings, collapse) ->
+    SpaceCount = getSpaceCount(Length, Strings),
+    NumWholes = length(Strings) - 1,
+    Wholes = splitNumToList(SpaceCount, NumWholes),
+    buildCollapseLine(Strings, Wholes).
 
 getSpaceCount(Length, Strings) ->
     TotalChars = lists:concat(Strings),
     max(0, Length - length(TotalChars)).
 
+
+splitNumToList(_, 0) -> [];
 splitNumToList(Number, Length) ->
     Common = Number div Length,
     Shares = Number rem Length,
@@ -61,3 +68,9 @@ formSplitList(Result, Common, Shares, Length) ->
     NextResult = Result ++ [Common + 1],
     formSplitList(NextResult, Common, Shares - 1, Length - 1).
 
+
+buildCollapseLine(Strings, Wholes) ->
+    Spaces = stringifyWholes(Wholes),
+    AlignedStrings = mixLists(Strings, Spaces),
+
+    lists:concat(AlignedStrings).

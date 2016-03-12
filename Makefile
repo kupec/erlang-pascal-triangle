@@ -7,7 +7,7 @@ all: app.beam align.beam pascal.beam
 	erlc $^
 
 clean:
-	rm -rf *.beam
+	rm -rf *.beam *.dump
 
 run: all
 	erl -noshell -s ${APP} ${START} -s init stop
