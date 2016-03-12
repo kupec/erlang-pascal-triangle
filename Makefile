@@ -1,7 +1,7 @@
 APP=app
 START=start
 
-all: app.beam align.beam
+all: app.beam align.beam pascal.beam
 
 %.beam: %.erl
 	erlc $^
