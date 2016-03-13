@@ -1,5 +1,12 @@
 -module(pascal).
--export([triangleLine/1]).
+-export([
+        triangle/1,
+        triangleLine/1
+        ]).
+
+triangle(N) ->
+    Lines = lists:seq(0, N),
+    lists:map(fun triangleLine/1, Lines).
 
 triangleLine(0) -> [1];
 triangleLine(N) -> triangleLine([], 0, N).
