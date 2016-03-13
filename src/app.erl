@@ -4,13 +4,23 @@
 -define(VERSION, "0.1").
 
 start() ->
+    printAppVersion(),
+
+    Order = readTriangleOrder(),
+
+    Triangle = pascal:triangle(Order),
+
+    printTriangle(Triangle).
+
+printAppVersion() ->
     io:fwrite("Pascal Triangle~n"),
-    io:fwrite("Version ~s~n", [?VERSION]),
+    io:fwrite("Version ~s~n", [?VERSION]).
 
-    {ok, [N]} = io:fread("Type a number: ", "~d"),
-    Triangle = pascal:triangle(N),
+readTriangleOrder() ->
+    {ok, [Order]} = io:fread("Type a number: ", "~d"),
+    Order.
 
-    TriangleFormat = pascalFormatter:format(Triangle),
-
-    io:fwrite("~s", [TriangleFormat]).
+printTriangle(Triangle) ->
+    Output = pascalFormatter:format(Triangle),
+    io:fwrite("~s", [Output]).
 
