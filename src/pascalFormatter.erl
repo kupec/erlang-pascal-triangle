@@ -82,16 +82,17 @@ layoutTriangleLine(Result, Offset, [Number | Line], [Position | Layout]) ->
     SpaceCount = Left - Offset,
     Length = Right - Left,
 
-    WhiteSpaces = lists:concat(lists:duplicate(SpaceCount, " ")),
-    NumberFormat = alignString(" ", Length, integer_to_list(Number)),
+    WhiteSpaces = string:copies(" ", SpaceCount),
+    NumberFormat = justifyString(Length, integer_to_list(Number)),
 
     NextResult = Result ++ string:concat(WhiteSpaces, NumberFormat),
     layoutTriangleLine(NextResult, Right, Line, Layout).
 
+justifyString(Length, String) ->
+    AlignSpaces = max(0, Length - length(String)),
+    LeftSpaces = AlignSpaces div 2,
+    RightSpaces = AlignSpaces - LeftSpaces,
 
-alignString(Char, Length, String) ->
-    AddCount = max(0, Length - length(String)),
-    AlignChars = lists:concat(lists:duplicate(AddCount, Char)),
-    string:concat(AlignChars, String).
-
-
+    Left = string:copies(" ", LeftSpaces),
+    Right = string:copies(" ", RightSpaces),
+    string:concat(string:concat(Left, String), Right).
