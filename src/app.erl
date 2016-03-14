@@ -22,5 +22,5 @@ readTriangleOrder() ->
 
 printTriangle(Triangle) ->
     Output = pascalFormatter:format(Triangle),
-    io:fwrite("~s", [Output]).
+    io:fwrite("~s~n", [Output]).
 
